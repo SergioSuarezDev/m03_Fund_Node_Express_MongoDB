@@ -1,0 +1,24 @@
+<h1>{{titulo}}</h1>
+
+<div class="container-fluid">
+    Bienvenido a {{titulo}}
+    <br/>
+    Estos son los anuncios publicados:
+    <br/> <br/>
+    <div class="card-columns">
+    {{#each anuncios}}
+        <div class="card" style="width: 20rem;">
+            <div class="card-header card-title">
+                <h2><i class="material-icons">inbox</i> {{this.nombre}}</h2>
+            </div>
+            <div class="card-body">
+                <h6 class="card-subtitle mb-4">Id: {{this._id}}</h6>
+                <li>Tipo: {{this.tipo}}</li>
+                <li>Precio: {{this.precio}}</li>  
+            </div>
+        </div>
+        <br/>
+    {{/each}}
+    </div>
+  </div>
+
