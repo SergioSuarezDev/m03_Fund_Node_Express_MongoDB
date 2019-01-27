@@ -7,7 +7,7 @@ router.get('/', async (req, res, next) => {
   try {
     //Recogemos los valores de entrada
     const nombre = req.query.nombre;
-    const rangoprecio = req.query.rangoprecio;
+    const precio = req.query.precio;
     const tipo = req.query.tipo;
     const tags = req.query.tags;
     const saltar = parseInt(req.query.saltar);
@@ -28,8 +28,8 @@ router.get('/', async (req, res, next) => {
     }
 
       // Comprobamos y validamos el parametro de rango de precios
-      if (rangoprecio) {
-        let MinMax = rangoprecio.split("-")
+      if (precio) {
+        let MinMax = precio.split("-")
         let min = MinMax[0];
         let max = MinMax[1];
 

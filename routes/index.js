@@ -9,6 +9,7 @@ router.get('/', function(req, res, next) {
   if (req.query.nombre) params.nombre = req.query.nombre;
   if (req.query.orden) params.orden = req.query.orden;
   if (req.query.tipo) params.tipo = req.query.tipo;
+  if (req.query.precio) params.precio = req.query.precio;
 
 
   // busqueda.orden = req.query.nombre;
