@@ -88,7 +88,7 @@ Ejemplo:
 
 * **http://localhost:3000/** (Permite bver el front creado con handlebars)
 
-Permite pasar querystrings para filtrar los resultados.
+Permite pasar querystrings para filtrar los resultados por URL, no obstante se han añadido algunos filtros importantes en un pequeño formulario creado con Bootstrap y Material UI.
 
 
 ## Otra información
