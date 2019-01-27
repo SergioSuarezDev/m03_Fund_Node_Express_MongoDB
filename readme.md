@@ -46,9 +46,23 @@ Parámetros:
 `order=campo (Ordena por el campo indicado)
 `
 
-`rangoprecio=12,40 (Rango de precio minimo,maximo)
+`precio=12,40 (Rango de precio minimo,maximo)
 `
 
+`precio=0,40 (Rango de precio  desde 0 a 40)
+`
+
+`precio=5,0 (Rango de precio desde 5 sin limite final)
+`
+
+`precio=50 (Precio = 50)
+`
+
+`saltar=5 (Salta los 5 primeros)
+`
+
+`limitar=5 (Limita el resultado a los 5 últimos)
+`
 
 * **http://localhost:3000/api_v1/anuncio/tags**
 (GET, Retorna una lista de todos los tags disponibles)

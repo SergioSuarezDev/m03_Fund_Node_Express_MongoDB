@@ -18,8 +18,8 @@ router.get('/', async (req, res, next) => {
 
     const filtro = {};
 
-     if (nombre) {filtro.nombre = nombre}
-     if (tags) {filtro.tags = {$in: tags.split(',')}}
+     if (nombre) {filtro.nombre = new RegExp('^' + nombre, "i")}
+     if (tags) {filtro.tags = {$in: tags.split('-')}}
 
       // Comprobamos y validamos el tipo 
      if (tipo) {
@@ -29,7 +29,7 @@ router.get('/', async (req, res, next) => {
 
       // Comprobamos y validamos el parametro de rango de precios
       if (rangoprecio) {
-        let MinMax = rangoprecio.split(",")
+        let MinMax = rangoprecio.split("-")
         let min = MinMax[0];
         let max = MinMax[1];
 

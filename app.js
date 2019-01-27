@@ -1,9 +1,10 @@
+//Modulos
 const createError = require('http-errors');
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
-
+const bodyParser = require('body-parser');
 
 const app = express();
 
@@ -16,6 +17,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(bodyParser.json({limit: '5mb'})); 
+app.use(bodyParser.urlencoded({extended: false, limit: '5mb', parameterLimit: 5000}));
+
 
 //Conexion a la base de datos
 require('./lib/mongoose');
