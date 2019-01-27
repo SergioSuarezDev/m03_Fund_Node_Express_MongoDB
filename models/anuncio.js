@@ -4,25 +4,25 @@ const mongoose = require('mongoose');
 
 // Definimos esquema 
 let anuncioSchema = new mongoose.Schema({
-    nombre: String,
+    name: String,
     tags: [String],
-    venta: Boolean,
-    precio: Number,
-    foto: String,
+    sale: Boolean,
+    prize: Number,
+    picture: String,
 }, {collection: 'anuncios'});
 
 
-anuncioSchema.statics.dameAnuncios = (filtro, saltar, limitar, campos, orden) => {
-    const query = Anuncio.find(filtro);
-    query.skip(saltar);
-    query.limit(limitar);
-    query.select(campos);
-    query.sort(orden);
+anuncioSchema.statics.getAds = (filter, start, limit, fields, order) => {
+    const query = Anuncio.find(filter);
+    query.skip(start);
+    query.limit(limit);
+    query.select(fields);
+    query.sort(order);
     let res = query.exec();
     return res;
 }
 
-anuncioSchema.statics.dameTags = () => {
+anuncioSchema.statics.getTags = () => {
     const query = Anuncio.distinct("tags");
     let res = query.exec();
     return res;

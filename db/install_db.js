@@ -18,7 +18,7 @@ db.once( 'open', async () =>{
             process.exit(0);
         }
         
-        await initModel(Anuncio, anunciosData.anuncios, 'anuncios');
+        await initModel(Anuncio, anunciosData.ads, 'anuncios');
         db.close;
         process.exit(0);
 

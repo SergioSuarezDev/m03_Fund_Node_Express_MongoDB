@@ -18,7 +18,7 @@ router.get("/info", function(parametros, salida){
 function dameInfoApp(){
  let infoAPP = require('../../package.json');
  let res = {
-      nombre: infoAPP.name,
+      name: infoAPP.name,
       version: infoAPP.version,
       autor: infoAPP.author,
       descripcion: infoAPP.description,

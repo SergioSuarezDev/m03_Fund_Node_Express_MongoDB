@@ -6,41 +6,52 @@ router.get('/', async (req, res, next) => {
 
   try {
     //Recogemos los valores de entrada
-    const nombre = req.query.nombre;
-    const precio = req.query.precio;
-    const tipo = req.query.tipo;
+    const name = req.query.name;
+    const prize = req.query.prize;
+    const type = req.query.type;
     const tags = req.query.tags;
-    const saltar = parseInt(req.query.saltar);
-    const limitar = parseInt(req.query.limitar);
-    const campos = req.query.campos;
-    const orden = req.query.orden;
+    const start = parseInt(req.query.start);
+    const limit = parseInt(req.query.limit);
+    const fields = req.query.fields;
+    const order = req.query.order;
 
 
-    const filtro = {};
+    const filter = {};
 
-     if (nombre) {filtro.nombre = new RegExp('^' + nombre, "i")}
-     if (tags) {filtro.tags = {$in: tags.split('-')}}
+     if (name) {filter.name = new RegExp('^' + name, "i")}
+     if (tags) {filter.tags = {$in: tags.split(',')}}
 
       // Comprobamos y validamos el tipo 
-     if (tipo) {
-      if (tipo === "venta") {filtro.venta = true}
-      if (tipo === "busqueda") {filtro.venta = false}
+     if (type) {
+      if (type === "venta") {filter.sale = true}
+      if (type === "busqueda") {filter.sale = false}
     }
 
+
+
+
       // Comprobamos y validamos el parametro de rango de precios
-      if (precio) {
-        let MinMax = precio.split("-")
+      if (prize) {
+        let MinMax = prize.split("-")
         let min = MinMax[0];
         let max = MinMax[1];
 
-        if (MinMax[0] === undefined || MinMax[1] === undefined) {
-          res.status(409);
-          res.json({ success: false, result: "Rango de precios erróneo." });
+        console.log("min: "+ MinMax[0], "max:" + MinMax[1])
+
+        if (!min) { // Saca los mayores a XX
+          min = 0; filter.prize = {$lte : max}
+        } 
+        if (!max) { //Saca los menores a XX
+          max = 0; filter.prize = {$gte : min}
         }
-        filtro.precio = { $gt :  min, $lt : max}
+
+        if (min != 0 && max != 0) {  // Saca un limite definido entre min,max
+          filter.prize = {$gte : min, $lte : max}
+       }
       }
 
-    const anuncios = await Anuncio.dameAnuncios(filtro, saltar, limitar, campos, orden)
+
+    const anuncios = await Anuncio.getAds(filter, start, limit, fields, order)
 
     const resultado = {
       success : true,
@@ -59,13 +70,13 @@ router.get('/', async (req, res, next) => {
 
 router.post('/nuevo', async (req, res, next) => {
 
-  const nombre = req.body.nombre;
+  const name = req.body.name;
   const tags = req.body.tags;
   const foto = req.body.foto;
   const venta = req.body.venta;
   const precio = req.body.precio;
 
-  if (nombre === undefined || tags === undefined || 
+  if (name === undefined || tags === undefined || 
       foto === undefined || venta === undefined || 
       precio === undefined){
     //Validamos que nos lleguen todos los datos
@@ -97,7 +108,7 @@ router.post('/nuevo', async (req, res, next) => {
 router.get('/tags', async (req, res, next) => {
     try {
 
-      const tags = await Anuncio.dameTags();
+      const tags = await Anuncio.getTags();
       res.json({ success: true, result: tags });
       
       } catch(err) {

@@ -40,7 +40,7 @@ Parámetros:
 `tipo=busqueda / tipo=venta (Busca por tipo)
 `
 
-`nombre=nombre (Busca por nombre, case sensitive)
+`name=name (Busca por name, case sensitive)
 `
 
 `order=campo (Ordena por el campo indicado)
@@ -74,7 +74,7 @@ Parámetros:
 Ejemplo: 
 
 `{
-	"nombre": "test",
+	"name": "test",
 	"tags": ["mobile", "work"],
 	"foto": "test.jpg",
 	"venta": false,
@@ -82,8 +82,17 @@ Ejemplo:
 }
 `
 
+## COmo usar el front
+
+* **http://localhost:3000/api_v1/anuncio/tags**
+
+Permite pasar querystrings para filtrar los resultados.
+
+
 
 ## Otra información
+
+
 
 ### Para arrancar un servidor de mongodb desde consola:
 

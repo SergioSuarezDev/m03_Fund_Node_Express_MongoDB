@@ -6,32 +6,29 @@ const http = require('http');
 router.get('/', function(req, res, next) {
 
   let params = {} 
-  if (req.query.nombre) params.nombre = req.query.nombre;
-  if (req.query.orden) params.orden = req.query.orden;
-  if (req.query.tipo) params.tipo = req.query.tipo;
-  if (req.query.precio) params.precio = req.query.precio;
-
-
-  // busqueda.orden = req.query.nombre;
-  // busqueda.nombre = req.query.nombre;
+  if (req.query.name) params.name = req.query.name;
+  if (req.query.order) params.order = req.query.order;
+  if (req.query.type) params.type = req.query.type;
+  if (req.query.prize) params.prize = req.query.prize;
+  if (req.query.tags) params.tags = req.query.tags;
 
 
   // Cogemos todos los parametros recibidos y montamos la QueryString
   let URLSearch = '', v = 0;
 
-  for(let [i, valor] of Object.entries(params)) {
+  for(let [i, v] of Object.entries(params)) {
     if (v == 0)  {
-      URLSearch += i + "=" + valor;
+      URLSearch += i + "=" + v;
     } else {
-      URLSearch += "&" + i + "=" + valor;
+      URLSearch += "&" + i + "=" + v;
     }
     v++;
   }
 
-  // Llamamos al api
+  // Llamamos al api usando el QueryString montado
   http.get('http://localhost:3000/api_v1/anuncio/?' + URLSearch, (resp) => {
     let data = '';
-  
+
     resp.on('data', (d) => {
       data += d;
     });
@@ -39,22 +36,19 @@ router.get('/', function(req, res, next) {
     resp.on('end', () => {
 
       //Preparo un array para mejorar los datos de salida
-      let anunciosFinal = [];
+      let adsFinal = [];
+      data = JSON.parse(data);
 
-      for (let anuncio of JSON.parse(data)) {
-
-        if (anuncio.venta == false){
-          anuncio.tipo = "Busqueda"
+      for (let ad of data) {
+        if (ad.sale == false){
+          ad.type = "Busqueda"
         } else {
-          anuncio.tipo = "Venta"
+          ad.type = "Venta"
         }
-        let montaPrecio = anuncio.precio + "  €";
-        anuncio.precio = montaPrecio.replace(".",",")
-        anunciosFinal.push(anuncio);
+        let montaPrecio = ad.prize + "  €";
+        ad.prize = montaPrecio.replace(".",",")
+        adsFinal.push(ad);
       } 
-
-
- 
 
       // Llamamos al api para sacar los tags
       http.get('http://localhost:3000/api_v1/anuncio/tags', (resp) => {
@@ -64,15 +58,19 @@ router.get('/', function(req, res, next) {
           tags += d;
         });
 
+
         resp.on('end', () => {
 
-          let datos = {
-            titulo: 'Nodepop',
-            anuncios: anunciosFinal,
-            tags: JSON.parse(tags)
+          tags = JSON.parse(tags);
+
+          let data = {
+            title: 'Nodepop',
+            ads: adsFinal,
+            tags: tags.result
           }
 
-          res.render('index', datos);
+          // Finalmente renderizamos la vista con todos los datos
+          res.render('index', data);
 
         });
       });
