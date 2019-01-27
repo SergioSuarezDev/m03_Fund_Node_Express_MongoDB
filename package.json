@@ -1,6 +1,6 @@
 {
   "name": "nodepop",
-  "version": "0.1.1",
+  "version": "0.2.1",
   "description": "Servicio REST usando NodeJS con un front para mostrasr artículos",
   "author": "Sergio Suárez - Keepcoding",
   "copyright": "(c) SergioSuarezDev 2019",

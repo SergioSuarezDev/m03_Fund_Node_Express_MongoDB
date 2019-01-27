@@ -27,29 +27,33 @@ router.get('/', async (req, res, next) => {
       if (type === "busqueda") {filter.sale = false}
     }
 
-
-
-
       // Comprobamos y validamos el parametro de rango de precios
       if (prize) {
-        let MinMax = prize.split("-")
-        let min = MinMax[0];
-        let max = MinMax[1];
+        let p = prize.indexOf('-');
 
-        console.log("min: "+ MinMax[0], "max:" + MinMax[1])
-
-        if (!min) { // Saca los mayores a XX
-          min = 0; filter.prize = {$lte : max}
+        if (p === -1) { // Precio fijo, sin limites
+          filter.prize = prize
         } 
-        if (!max) { //Saca los menores a XX
-          max = 0; filter.prize = {$gte : min}
+        else {
+          let MinMax = prize.split("-")
+          let min = MinMax[0];
+          let max = MinMax[1];
+  
+          if (!min) { // Saca los mayores a XX
+            min = 0; filter.prize = {$lte : max}
+          } 
+          if (!max) { //Saca los menores a XX
+            max = 0; filter.prize = {$gte : min}
+          }
+  
+          if (min != 0 && max != 0) {  // Saca un limite definido entre min,max
+            filter.prize = {$gte : min, $lte : max}
+         }
         }
 
-        if (min != 0 && max != 0) {  // Saca un limite definido entre min,max
-          filter.prize = {$gte : min, $lte : max}
-       }
-      }
 
+
+      }
 
     const anuncios = await Anuncio.getAds(filter, start, limit, fields, order)
 
