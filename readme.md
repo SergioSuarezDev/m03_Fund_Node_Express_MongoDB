@@ -70,7 +70,7 @@ Parámetros:
 (GET, Retorna una lista de todos los tags disponibles)
 
 
-* **http://localhost:3000/api_v1/anuncio/tags**
+* **http://localhost:3000/api_v1/anuncio/**
 (POST, Crea un anuncio)
 
 Ejemplo: 
@@ -86,7 +86,7 @@ Ejemplo:
 
 ## Como usar el front
 
-* **http://localhost:3000/**
+* **http://localhost:3000/** (Permite bver el front creado con handlebars)
 
 Permite pasar querystrings para filtrar los resultados.
 
