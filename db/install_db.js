@@ -12,14 +12,16 @@ const anunciosData = require('../data/anuncios.json');
 db.once( 'open', async () =>{
     try {
         // Preguntar al usuario si quiere borrar la BD
-        const response = await askUser('¿Seguro que quieres borrar la BD? (no) ');
-        if (response.toLowercase() !== 'si') {
-            console.log('Abortado');
+        const response = await askUser('¿Seguro que quieres borrar la BD? (no) (si) ');
+        if (response.toLowerCase() !== 'si') {
+            console.log('Proceso Abortado');
             process.exit(0);
         }
-            await initModel(Anuncio, anunciosData, 'anuncios');
         
+        await initModel(Anuncio, anunciosData.anuncios, 'anuncios');
         db.close;
+        process.exit(0);
+
 
     } catch (error) {
         console.log("Hubo un error:", error);
@@ -42,8 +44,9 @@ function askUser(question) {
 }
 
 async function initModel(Model, data, modelName) {
-    const deleted  = await Model.deleteMany();
-    console.log(`Eliminados: ${deleted.n}  ${modelName}`);
+    const borrados  = await Model.deleteMany();
+    console.log(`Eliminados: ${borrados.n}  ${modelName}`);
     const insertados = await Model.insertMany(data);
-    console.log(`Insertados: ${insertados.lenght}  ${modelName}`);
+    console.log(`Insertados: ${insertados.length}  ${modelName}`);
+    return;
 }

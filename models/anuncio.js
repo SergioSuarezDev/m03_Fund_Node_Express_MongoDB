@@ -5,10 +5,10 @@ const mongoose = require('mongoose');
 // Definimos esquema 
 let anuncioSchema = new mongoose.Schema({
     nombre: String,
-    tipo: Boolean,
+    tags: [String],
+    venta: Boolean,
     precio: Number,
     foto: String,
-    tags: [String],
 }, {collection: 'anuncios'});
 
 
@@ -18,8 +18,17 @@ anuncioSchema.statics.dameAnuncios = (filtro, saltar, limitar, campos, orden) =>
     query.limit(limitar);
     query.select(campos);
     query.sort(orden);
-    return query.exec();
+    let res = query.exec();
+    return res;
+}
+
+anuncioSchema.statics.dameTags = () => {
+    const query = Anuncio.distinct("tags");
+    let res = query.exec();
+    return res;
 }
 
 const Anuncio = mongoose.model('Anuncio', anuncioSchema);
+
+
 module.exports = Anuncio;

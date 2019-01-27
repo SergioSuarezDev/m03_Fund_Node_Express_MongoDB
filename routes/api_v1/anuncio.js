@@ -1,15 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const Anuncio = require ('../../models/anuncio')
-const multer  = require('multer')
-const directorio = multer({ dest: '../../public/images' })
-
 
 router.get('/', async (req, res, next) => {
-  try {
 
+  try {
     //Recogemos los valores de entrada
     const nombre = req.query.nombre;
+    const rangoprecio = req.query.rangoprecio;
+    const tipo = req.query.tipo;
     const tags = req.query.tags;
     const saltar = parseInt(req.query.saltar);
     const limitar = parseInt(req.query.limitar);
@@ -18,8 +17,28 @@ router.get('/', async (req, res, next) => {
 
 
     const filtro = {};
+
      if (nombre) {filtro.nombre = nombre}
      if (tags) {filtro.tags = {$in: tags.split(',')}}
+
+      // Comprobamos y validamos el tipo 
+     if (tipo) {
+      if (tipo === "venta") {filtro.venta = true}
+      if (tipo === "busqueda") {filtro.venta = false}
+    }
+
+      // Comprobamos y validamos el parametro de rango de precios
+      if (rangoprecio) {
+        let MinMax = rangoprecio.split(",")
+        let min = MinMax[0];
+        let max = MinMax[1];
+
+        if (MinMax[0] === undefined || MinMax[1] === undefined) {
+          res.status(409);
+          res.json({ success: false, result: "Rango de precios erróneo." });
+        }
+        filtro.precio = { $gt :  min, $lt : max}
+      }
 
     const anuncios = await Anuncio.dameAnuncios(filtro, saltar, limitar, campos, orden)
 
@@ -43,14 +62,15 @@ router.post('/nuevo', async (req, res, next) => {
   const nombre = req.body.nombre;
   const tags = req.body.tags;
   const foto = req.body.foto;
-  const tipo = req.body.tipo;
+  const venta = req.body.venta;
   const precio = req.body.precio;
 
-
-  if (!nombre || !tags || !foto || !tipo || !precio){
+  if (nombre === undefined || tags === undefined || 
+      foto === undefined || venta === undefined || 
+      precio === undefined){
     //Validamos que nos lleguen todos los datos
-    res.status(500);
-    res.json({ success: false, result: "faltan datos" });
+    res.status(409);
+    res.json({ success: false, result: "faltan algún dato." });
     return;
   }
 
@@ -72,5 +92,18 @@ router.post('/nuevo', async (req, res, next) => {
       return;
     }
   });
+
+
+router.get('/tags', async (req, res, next) => {
+    try {
+
+      const tags = await Anuncio.dameTags();
+      res.json({ success: true, result: tags });
+      
+      } catch(err) {
+        next(err);
+        return;
+      }
+});
 
 module.exports = router;

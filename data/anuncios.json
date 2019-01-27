@@ -1,1 +1,89 @@
-{"hola": "hola"}
+{
+    "anuncios": [ 
+        {
+            "nombre": "Bicicleta", 
+            "venta": true,
+            "precio": 230.15,
+            "foto": "bicicleta.jpg",
+            "tags": [ 
+                "lifestyle", 
+                "motor"
+            ]
+         }, 
+         {
+            "nombre": "iPhone 7", 
+            "venta": false,
+            "precio": 50.00,
+            "foto": "iphone.jpg",
+            "tags": [ 
+                "lifestyle", 
+                "mobile"
+            ]
+        },
+        { 
+            "nombre" : "Lapiz", 
+            "venta": false,
+            "precio" : 5.0, 
+            "foto" : "lapiz.jpg", 
+            "tags" : [
+                "work"
+            ]
+        },
+        { 
+            "nombre" : "Cama", 
+            "venta": false,
+            "precio" : 120.3, 
+            "foto" : "cama.jpg", 
+            "tags" : [
+                "lifestyle"
+            ]
+        },
+        { 
+            "nombre" : "Coche", 
+            "venta": true,
+            "precio" : 3500.30, 
+            "foto" : "coche.jpg", 
+            "tags" : [
+                "motor", 
+                "lifestyle"
+            ]
+        },
+        { 
+            "nombre" : "Sofa", 
+            "venta": true,
+            "precio" : 239.0, 
+            "foto" : "sofa.jpg", 
+            "tags" : [
+                "lifestyle" 
+            ]
+        },
+        { 
+            "nombre" : "Piso", 
+            "venta": false,
+            "precio" : 350.0, 
+            "foto" : "piso.jpg", 
+            "tags" : [
+                "lifestyle"
+            ]
+        },
+        { 
+            "nombre" : "iPad", 
+            "venta": true,
+            "precio" : 400.34, 
+            "foto" : "ipad.jpg", 
+            "tags" : [
+                "mobile", 
+                "work"
+            ]
+        },
+        { 
+            "nombre" : "Zapatillas", 
+            "venta": false,
+            "precio" : 38.34, 
+            "foto" : "zapatillas.jpg", 
+            "tags" : [
+                "lifestyle"
+            ]
+        }        
+    ]
+    }

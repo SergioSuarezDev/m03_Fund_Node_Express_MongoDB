@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
 //console.log(req.query.id);
 
   // Llamamos al api
-  http.get('http://localhost:3000/api_v1/anuncio/?orden=precio', (resp) => {
+  http.get('http://localhost:3000/api_v1/anuncio/', (resp) => {
     let data = '';
   
     resp.on('data', (d) => {
@@ -16,15 +16,32 @@ router.get('/', function(req, res, next) {
     });
 
     resp.on('end', () => {
+
+      //Preparo un array para mejorar los datos de salida
+      let anunciosFinal = [];
+
+      for (let anuncio of JSON.parse(data)) {
+        console.log(anuncio.venta);
+
+        if (anuncio.venta == false){
+          anuncio.tipo = "Busqueda"
+        } else {
+          anuncio.tipo = "Venta"
+        }
+        let montaPrecio = anuncio.precio + "  €";
+        anuncio.precio = montaPrecio.replace(".",",")
+        anunciosFinal.push(anuncio);
+      } 
+
+
       let datos = {
         titulo: 'Nodepop',
-        anuncios: JSON.parse(data)
+        anuncios: anunciosFinal
       }
 
       res.render('index', datos);
     });
-
-});
+  });
 
 });
 

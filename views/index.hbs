@@ -2,8 +2,8 @@
 
 <div class="container-fluid">
     Bienvenido a {{titulo}}
-    <br/>
-    Estos son los anuncios publicados:
+    <br/> <br/>
+    Estos son los anuncios publicados a día de hoy:
     <br/> <br/>
     <div class="card-columns">
     {{#each anuncios}}
@@ -15,8 +15,9 @@
                 <h6 class="card-subtitle mb-4">Id: {{this._id}}</h6>
                 <li>Tipo: {{this.tipo}}</li>
                 <li>Precio: {{this.precio}}</li>  
+                <li>Tags: {{this.tags}}</li>
                 <picture>
-                    <img src="images/{{this.foto}}" alt="MDN">
+                    <img src="images/{{this.foto}}" alt="{{this.nombre}}">
                 </picture>
 
             </div>
