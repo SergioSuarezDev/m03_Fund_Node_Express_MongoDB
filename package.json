@@ -3,7 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "dev": "cross.env DEBUG=nodepop:* nodemon",
+    "install_db": "node ./db/install_db"
   },
   "dependencies": {
     "cookie-parser": "~1.4.3",
